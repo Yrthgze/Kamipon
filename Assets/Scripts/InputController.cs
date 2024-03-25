@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Quadrant
+{
+    HighLeftQuadrant = 0,
+    HighRightQuadrant = 1,
+    LowLeftQuadrant = 2,
+    LowRightQuadrant = 3
+}
 public class InputController : MonoBehaviour
 {
-    private enum Quadrant
-    {
-        HighLeftQuadrant = 0,
-        HighRightQuadrant = 1,
-        LowLeftQuadrant = 2,
-        LowRightQuadrant = 3
-    }
     private AudioClip[] a_audio_clips = new AudioClip[4];
     public Camera c_camera;
     private float f_screen_height, f_screen_width, f_screen_mid_height, f_screen_mid_width;
     public AudioClip c_audio_clip_ka, c_audio_clip_mi, c_audio_clip_po, c_audio_clip_n;
     private AudioSource c_as_audio_player;
+    private List<Quadrant> l_e_quadrants = new List<Quadrant>();
 
     // Start is called before the first frame update
     void Start()
@@ -57,8 +58,21 @@ public class InputController : MonoBehaviour
         return e_quadrant;
     }
 
+    bool CheckIfAnthemIsValid()
+    {
+        if(l_e_quadrants.Count >= 4)
+        {
+            return true;
+        }
+        return false;
+    }
     void PlayQuadrant(Quadrant e_quadrant)
     {
+        l_e_quadrants.Add(e_quadrant);
+        if(CheckIfAnthemIsValid())
+        {
+            
+        }
         c_as_audio_player.PlayOneShot(a_audio_clips[(int)e_quadrant]);
     }
 
